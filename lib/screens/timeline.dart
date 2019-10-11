@@ -8,7 +8,9 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "Timeline",
       home: Scaffold(
         appBar: AppBar(
@@ -69,7 +71,7 @@ class _BudgetOverviewState extends State<BudgetOverview> {
               color: Colors.black,
               border: Border.all(),
               borderRadius: BorderRadius.circular(10.0),
-              boxShadow:
+
           ),
           child: Column(
             children: <Widget>[
