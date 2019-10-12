@@ -10,40 +10,54 @@ class _TimelineState extends State<Timeline> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Timeline",
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Timeline",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
+        backgroundColor: Colors.blue,
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              floating: true,
+              title: Text(
+                "Timezline",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.search),
+                  iconSize: 30.0,
+                  onPressed: () {
+                    debugPrint("Search Icon CLicked");
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.account_circle),
+                  iconSize: 30.0,
+                  onPressed: () {
+                    debugPrint("Account Icon CLicked");
+                  },
+                ),
+              ],
+              leading: Icon(
+                Icons.menu,
+              ),
+              expandedHeight: 150.0,
+              backgroundColor: Colors.blue,
+              flexibleSpace: FlexibleSpaceBar(
+                collapseMode: CollapseMode.parallax,
+                background: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 80.0),
+                    child: BudgetOverview()),
+              ),
             ),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.account_circle),
-              iconSize: 30.0,
-              color: Colors.black,
-              onPressed: () {
-                debugPrint("Account Icon CLicked");
-              },
-            ),
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (context, index) => ListTile(title: Text('Item #$index')),
+                    // Builds 1000 ListTiles
+                    childCount: 1000))
           ],
-          elevation: 0.0,
-          leading: Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.white,
-        ),
-        body: Container(
-          color: Colors.white,
-          child: Column(
-            children: <Widget>[
-              BudgetOverview(),
-            ],
-          ),
         ),
       ),
     );
@@ -56,98 +70,125 @@ class BudgetOverview extends StatefulWidget {
 }
 
 class _BudgetOverviewState extends State<BudgetOverview> {
+  double _sqmargin = 2;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(//Budget Wala Section
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(vertical:5.0,horizontal: 25.0),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.black,
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Balance",
-                      style: TextStyle(color: Colors.white, fontSize: 15.0),
-                    ),
-                    Text(
-                      "\$5000",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                      ),
-                    )
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                ),
+    return Container(
+      //Budget Wala Section
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: _sqmargin),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  new BoxShadow(
+                      color: Colors.black45,
+                      offset: new Offset(0.0, 1.0),
+                      blurRadius: 1.0)
+                ],
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical:5.0,horizontal: 25.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.green,
-                    border: Border.all(
-                      color: Colors.green,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Balance",
+                    style: TextStyle(fontSize: 12.0),
+                  ),
+                  Text(
+                    "\$5000",
+                    style: TextStyle(
+                      fontSize: 25.0,
                     ),
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "Income",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                    Text(
-                      "\$400",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                      ),
-                    ),
-                  ],
-                ),
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(vertical:5.0,horizontal: 25.0),
-                decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.rectangle,
-                    border: Border.all(
-                      color: Colors.red,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      "\Expense",
-                      style: TextStyle(fontSize: 15.0, color: Colors.white),
-                    ),
-                    Text(
-                      "\$300",
-                      style: TextStyle(fontSize: 25.0, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(horizontal: _sqmargin),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  new BoxShadow(
+                      color: Colors.black45,
+                      offset: new Offset(0.0, 1.0),
+                      blurRadius: 1.0)
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "Income",
+                    style: TextStyle(
+//                        color: Colors.white,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  Text(
+                    "\$400",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 25.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: _sqmargin),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(10.0),
+                boxShadow: [
+                  new BoxShadow(
+                      color: Colors.black45,
+                      offset: new Offset(0.0, 1.0),
+                      blurRadius: 1.0)
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "\Expense",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                    ),
+                  ),
+                  Text(
+                    "\$300",
+                    style: TextStyle(fontSize: 25.0, color: Colors.red),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+//temp
+
+//),
