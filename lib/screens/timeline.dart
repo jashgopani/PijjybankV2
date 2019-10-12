@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'budgetOverview.dart';
 
 class Timeline extends StatefulWidget {
@@ -7,7 +9,9 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  final GlobalKey<ScaffoldState> _scaffoldDrawerKey = GlobalKey<ScaffoldState>();//for drawer
+  final GlobalKey<ScaffoldState> _scaffoldDrawerKey =
+      GlobalKey<ScaffoldState>(); //for drawer
+  String _username = "Jash";
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +19,6 @@ class _TimelineState extends State<Timeline> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: _scaffoldDrawerKey,
-//        backgroundColor: Colors.blue,
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -30,22 +33,20 @@ class _TimelineState extends State<Timeline> {
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.search),
-                  iconSize: 30.0,
                   onPressed: () {
                     debugPrint("Search Icon CLicked");
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.account_circle),
-                  iconSize: 30.0,
                   onPressed: () {
                     debugPrint("Account Icon CLicked");
                   },
                 ),
               ],
               leading: IconButton(
-                icon:Icon(Icons.menu),
-                onPressed: (){
+                icon: Icon(Icons.menu),
+                onPressed: () {
                   debugPrint("Drawer open");
                   _scaffoldDrawerKey.currentState.openDrawer();
                 },
@@ -56,10 +57,9 @@ class _TimelineState extends State<Timeline> {
                 collapseMode: CollapseMode.parallax,
                 background: Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: 80.0,bottom: 20.0),
+                    margin: EdgeInsets.only(top: 80.0, bottom: 20.0),
                     child: BudgetOverview()),
               ),
-
             ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
@@ -72,26 +72,46 @@ class _TimelineState extends State<Timeline> {
           child: Icon(Icons.add),
         ),
         drawer: Drawer(
-          child: Column(
-            children: <Widget>[
-              Container(height: 50.0,color: Colors.purple,),
-              Container(height: 50.0,color: Colors.red,),
-
-              Container(height: 50.0,color: Colors.green,),
-
-              Container(height: 50.0,color: Colors.yellow,),
-
-              Container(height: 50.0,color: Colors.indigo,),
-
-            ],
-          ),
-        ),
+            child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  "Hi " + _username,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontStyle: FontStyle.italic,
+                      fontSize: 20.0),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.people),
+              title: Text("Family"),
+            ),
+            ListTile(
+              leading: Icon(Icons.timeline),
+              title: Text("Timeline"),
+            ),
+            ListTile(
+              leading: Icon(Icons.insert_chart),
+              title: Text("Statistics"),
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Logout"),
+            ),
+          ],
+        )),
       ),
     );
   }
 }
-
-
 
 //temp
 
