@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'timeline.dart';
-
+import 'trial.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class Login extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Timeline();
+                      return Trial();
                     }));
                   },
                 ),

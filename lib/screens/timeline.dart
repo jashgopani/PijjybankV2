@@ -8,7 +8,6 @@ class Timeline extends StatefulWidget {
 class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Timeline",
@@ -61,49 +60,41 @@ class _BudgetOverviewState extends State<BudgetOverview> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
+        Container(//Budget Wala Section
           alignment: Alignment.center,
-          margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
           padding: EdgeInsets.all(10.0),
-          width: 500.0,
-          decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: Colors.black,
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(10.0),
-
-          ),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
-                "Balance",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.0
+              Container(
+                padding: EdgeInsets.symmetric(vertical:5.0,horizontal: 25.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.black,
+                  border: Border.all(),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Balance",
+                      style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    ),
+                    Text(
+                      "\$5000",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                      ),
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
                 ),
               ),
-              Text(
-                "\$5000",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 50.0,
-                ),
-              )
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Expanded(
-              child: Container(
+              Container(
                 alignment: Alignment.center,
-//                        width: 500.0,
-                margin: EdgeInsets.only(
-                  left: 15.0,
-                ),
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.symmetric(vertical:5.0,horizontal: 25.0),
                 decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     color: Colors.green,
@@ -124,21 +115,17 @@ class _BudgetOverviewState extends State<BudgetOverview> {
                       "\$400",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 30.0,
+                        fontSize: 25.0,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              child: Container(
+              Container(
                 alignment: Alignment.center,
-//                        width: 500.0,
-                margin: EdgeInsets.only(left: 15.0, right: 15.0),
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.symmetric(vertical:5.0,horizontal: 25.0),
                 decoration: BoxDecoration(
-                  color: Colors.red,
+                    color: Colors.red,
                     shape: BoxShape.rectangle,
                     border: Border.all(
                       color: Colors.red,
@@ -152,14 +139,14 @@ class _BudgetOverviewState extends State<BudgetOverview> {
                     ),
                     Text(
                       "\$300",
-                      style: TextStyle(fontSize: 30.0, color: Colors.white),
+                      style: TextStyle(fontSize: 25.0, color: Colors.white),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
-        )
+            ],
+          ),
+        ),
       ],
     );
   }
