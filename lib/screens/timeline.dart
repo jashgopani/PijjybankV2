@@ -18,12 +18,13 @@ class _TimelineState extends State<Timeline> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.white,
         key: _scaffoldDrawerKey,
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
               pinned: true,
-              floating: true,
+//              floating: true,
               title: Text(
                 "Timeline",
                 style: TextStyle(
@@ -31,6 +32,7 @@ class _TimelineState extends State<Timeline> {
                 ),
               ),
               actions: <Widget>[
+
                 IconButton(
                   icon: Icon(Icons.search),
                   onPressed: () {
@@ -38,9 +40,9 @@ class _TimelineState extends State<Timeline> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.account_circle),
+                  icon: Icon(Icons.filter_list),
                   onPressed: () {
-                    debugPrint("Account Icon CLicked");
+                    debugPrint("Filter Icon CLicked");
                   },
                 ),
               ],
@@ -63,28 +65,83 @@ class _TimelineState extends State<Timeline> {
             ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
-                    (context, index) => ListTile(title: Text('Item #$index')),
-                    // Builds 1000 ListTiles
-                    childCount: 1000))
+                    (context, index) => Container(
+                        decoration: BoxDecoration(),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 0.5),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.rectangle,
+                              boxShadow: [
+                                new BoxShadow(
+                                    color: Colors.black45,
+                                    offset: new Offset(0.0, 1.0),
+                                    blurRadius: 1.0)
+                              ]),
+                          child: ListTile(
+                            leading: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[100],
+                                  shape: BoxShape.circle,
+                                ),
+                                margin: EdgeInsets.zero,
+                                padding: EdgeInsets.all(7.0),
+                                child: Icon(Icons.fastfood,
+                                    size: 35.0, color: Colors.red)),
+                            title: Text(
+                              'Expense #$index',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 17.0),
+                            ),
+                            subtitle: Text(
+                              'Some random description aksbjask ksfhk kafkjkf kfg aksgf kags fkg',
+                              overflow: TextOverflow.clip,
+                            ),
+                            trailing: Text(
+                              "\u20B9303",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.red,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            isThreeLine: true,
+                          ),
+                        )),
+                    childCount: 100))
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _scaffoldDrawerKey.currentState.showSnackBar(new SnackBar(
+              content: new Text("Added Transaction"),
+              action: SnackBarAction(
+                label: "Undo",
+                onPressed: (){
+                  debugPrint("Snackbar action clicked");
+                },
+              ),
+            ));
+          },
           child: Icon(Icons.add),
+          tooltip: "Add new transaction",
         ),
         drawer: Drawer(
-            child: ListView(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             DrawerHeader(
-              child: Container(
-                alignment: Alignment.bottomLeft,
-                child: Text(
-                  "Hi " + _username,
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontStyle: FontStyle.italic,
-                      fontSize: 20.0),
-                ),
+              padding: EdgeInsets.zero,
+              curve: Curves.elasticInOut,
+              duration: const Duration(milliseconds: 30000),
+              child: UserAccountsDrawerHeader(
+                accountEmail: Text("jash@gmail.com",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                    )),
+                accountName: Text(_username,
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.w600)),
               ),
               decoration: BoxDecoration(
                 color: Colors.blue,
@@ -103,6 +160,8 @@ class _TimelineState extends State<Timeline> {
               title: Text("Statistics"),
             ),
             ListTile(
+                leading: Icon(Icons.account_circle), title: Text("Profile")),
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text("Logout"),
             ),
@@ -112,7 +171,3 @@ class _TimelineState extends State<Timeline> {
     );
   }
 }
-
-//temp
-
-//),
