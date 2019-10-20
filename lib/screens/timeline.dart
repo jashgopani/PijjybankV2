@@ -20,96 +20,98 @@ class _TimelineState extends State<Timeline> {
       home: Scaffold(
         backgroundColor: Colors.white,
         key: _scaffoldDrawerKey,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              pinned: true,
+        body: RefreshIndicator(
+          onRefresh: ()async{
+            //as this always returns a future object, we have just added a future delay and
+            // await keyword by default returns a future object so no need to return explicitly here
+            await Future.delayed(Duration(seconds: 1));
+            _scaffoldDrawerKey.currentState.showSnackBar(SnackBar(content: Text("Refreshed"),));
+          },
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                pinned: true,
 //              floating: true,
-              title: Text(
-                "Timeline",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
+                title: Text(
+                  "Timeline",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              actions: <Widget>[
-
-                IconButton(
-                  icon: Icon(Icons.search),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      debugPrint("Search Icon CLicked");
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.filter_list),
+                    onPressed: () {
+                      debugPrint("Filter Icon CLicked");
+                    },
+                  ),
+                ],
+                leading: IconButton(
+                  icon: Icon(Icons.menu),
                   onPressed: () {
-                    debugPrint("Search Icon CLicked");
+                    debugPrint("Drawer open");
+                    _scaffoldDrawerKey.currentState.openDrawer();
                   },
                 ),
-                IconButton(
-                  icon: Icon(Icons.filter_list),
-                  onPressed: () {
-                    debugPrint("Filter Icon CLicked");
-                  },
+                expandedHeight: 200.0,
+                flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.parallax,
+                  background: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 80.0),
+                      child: BudgetOverview()),
                 ),
-              ],
-              leading: IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {
-                  debugPrint("Drawer open");
-                  _scaffoldDrawerKey.currentState.openDrawer();
-                },
               ),
-              expandedHeight: 200.0,
-              backgroundColor: Colors.blue,
-              flexibleSpace: FlexibleSpaceBar(
-                collapseMode: CollapseMode.parallax,
-                background: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: 80.0, bottom: 20.0),
-                    child: BudgetOverview()),
-              ),
-            ),
-            SliverList(
-                delegate: SliverChildBuilderDelegate(
-                    (context, index) => Container(
-                        decoration: BoxDecoration(),
-                        child: Container(
-                          margin: EdgeInsets.only(top: 0.5),
-                          decoration: BoxDecoration(
+              SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      (context, index) => Container(
+                            margin: EdgeInsets.only(top: 0.5),
+                            decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.rectangle,
-                              boxShadow: [
-                                new BoxShadow(
-                                    color: Colors.black45,
-                                    offset: new Offset(0.0, 1.0),
-                                    blurRadius: 1.0)
-                              ]),
-                          child: ListTile(
-                            leading: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  shape: BoxShape.circle,
+                            ),
+                            child: Card(
+                              child: ListTile(
+                                leading: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      shape: BoxShape.circle,
+                                    ),
+                                    margin: EdgeInsets.zero,
+                                    padding: EdgeInsets.all(7.0),
+                                    child: Icon(Icons.fastfood,
+                                        size: 35.0, color: Colors.red)),
+                                title: Text(
+                                  'Expense #$index',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 17.0),
                                 ),
-                                margin: EdgeInsets.zero,
-                                padding: EdgeInsets.all(7.0),
-                                child: Icon(Icons.fastfood,
-                                    size: 35.0, color: Colors.red)),
-                            title: Text(
-                              'Expense #$index',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 17.0),
-                            ),
-                            subtitle: Text(
-                              'Some random description aksbjask ksfhk kafkjkf kfg aksgf kags fkg',
-                              overflow: TextOverflow.clip,
-                            ),
-                            trailing: Text(
-                              "\u20B9303",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.red,
+                                subtitle: Text(
+                                  'Some random description aksbjask ksfhk kafkjkf kfg aksgf kags fkg',
+                                  overflow: TextOverflow.clip,
+                                ),
+                                trailing: Text(
+                                  "\u20B9303",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.red,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                isThreeLine: true,
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                            isThreeLine: true,
                           ),
-                        )),
-                    childCount: 100))
-          ],
+                      childCount: 100))
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
@@ -117,7 +119,7 @@ class _TimelineState extends State<Timeline> {
               content: new Text("Added Transaction"),
               action: SnackBarAction(
                 label: "Undo",
-                onPressed: (){
+                onPressed: () {
                   debugPrint("Snackbar action clicked");
                 },
               ),
@@ -132,7 +134,6 @@ class _TimelineState extends State<Timeline> {
           children: <Widget>[
             DrawerHeader(
               padding: EdgeInsets.zero,
-              curve: Curves.elasticInOut,
               duration: const Duration(milliseconds: 30000),
               child: UserAccountsDrawerHeader(
                 accountEmail: Text("jash@gmail.com",
