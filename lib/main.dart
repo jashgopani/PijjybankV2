@@ -20,6 +20,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Pijjybank",
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+      ),
       home: Login(),
     );
   }

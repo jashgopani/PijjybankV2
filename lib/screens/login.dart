@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pijjybank/screens/test.dart';
 import 'timeline.dart';
 class Login extends StatelessWidget {
   @override
@@ -49,7 +50,7 @@ class Login extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Timeline();
+                      return Activity();
                     }));
                   },
                 ),

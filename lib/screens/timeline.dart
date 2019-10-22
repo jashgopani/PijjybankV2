@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pijjybank/screens/groups.dart';
 
-import 'budgetOverview.dart';
+import '../widgets/budgetOverview.dart';
 
 class Timeline extends StatefulWidget {
   @override
@@ -21,11 +22,13 @@ class _TimelineState extends State<Timeline> {
         backgroundColor: Colors.white,
         key: _scaffoldDrawerKey,
         body: RefreshIndicator(
-          onRefresh: ()async{
+          onRefresh: () async {
             //as this always returns a future object, we have just added a future delay and
             // await keyword by default returns a future object so no need to return explicitly here
             await Future.delayed(Duration(seconds: 1));
-            _scaffoldDrawerKey.currentState.showSnackBar(SnackBar(content: Text("Refreshed"),));
+            _scaffoldDrawerKey.currentState.showSnackBar(SnackBar(
+              content: Text("Refreshed"),
+            ));
           },
           child: CustomScrollView(
             slivers: <Widget>[
@@ -70,46 +73,59 @@ class _TimelineState extends State<Timeline> {
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate(
-                      (context, index) => Container(
-                            margin: EdgeInsets.only(top: 0.5),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
+                      (context, index) => Dismissible(
+                            background: Container(
+                              color: Colors.red,
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
                             ),
-                            child: Card(
-                              child: ListTile(
-                                leading: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      shape: BoxShape.circle,
-                                    ),
-                                    margin: EdgeInsets.zero,
-                                    padding: EdgeInsets.all(7.0),
-                                    child: Icon(Icons.fastfood,
-                                        size: 35.0, color: Colors.red)),
-                                title: Text(
-                                  'Expense #$index',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 17.0),
-                                ),
-                                subtitle: Text(
-                                  'Some random description aksbjask ksfhk kafkjkf kfg aksgf kags fkg',
-                                  overflow: TextOverflow.clip,
-                                ),
-                                trailing: Text(
-                                  "\u20B9303",
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.red,
+                            key: Key((this).toString() + index.toString()),
+                            onDismissed: (DismissDirection d) {
+                              print(d.toString());
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 0.5),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Card(
+                                child: ListTile(
+                                  leading: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        shape: BoxShape.circle,
+                                      ),
+                                      margin: EdgeInsets.zero,
+                                      padding: EdgeInsets.all(7.0),
+                                      child: Icon(Icons.fastfood,
+                                          size: 35.0, color: Colors.red)),
+                                  title: Text(
+                                    'Expense #$index',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 17.0),
                                   ),
-                                  textAlign: TextAlign.center,
+                                  subtitle: Text(
+                                    'Some random description aksbjask ksfhk kafkjkf kfg aksgf kags fkg',
+                                    overflow: TextOverflow.clip,
+                                  ),
+                                  trailing: Text(
+                                    "\u20B9303",
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      color: Colors.red,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  isThreeLine: true,
                                 ),
-                                isThreeLine: true,
                               ),
                             ),
                           ),
-                      childCount: 100))
+                      childCount: 50))
             ],
           ),
         ),
@@ -124,6 +140,19 @@ class _TimelineState extends State<Timeline> {
                 },
               ),
             ));
+
+//            _scaffoldDrawerKey.currentState.showBottomSheet((context) {
+//              return Container(
+//                height:100.0,
+//                  child: Column(
+//                children: <Widget>[
+//                  Text("Bottom Sheet"),
+//                ],
+//              ));
+//            },
+//                elevation: 6.0,
+//                shape: RoundedRectangleBorder(
+//                    borderRadius: BorderRadius.circular(20.0)));
           },
           child: Icon(Icons.add),
           tooltip: "Add new transaction",
@@ -150,7 +179,12 @@ class _TimelineState extends State<Timeline> {
             ),
             ListTile(
               leading: Icon(Icons.people),
-              title: Text("Family"),
+              title: Text("Group"),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Groups();
+                }));
+              },
             ),
             ListTile(
               leading: Icon(Icons.timeline),
