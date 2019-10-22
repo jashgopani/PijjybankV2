@@ -17,13 +17,14 @@ class _BudgetOverviewState extends State<BudgetOverview> {
       //Budget Wala Section
       alignment: Alignment.center,
       padding: EdgeInsets.all(10.0),
+      margin: EdgeInsets.only(bottom:10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          StatisticBox(title:"Balance",amount:1000.0,textColor:Colors.black),
-          StatisticBox(title:"Expense",amount:100.0,textColor:Colors.red),
-          StatisticBox(title:"Income",amount:1000.0,textColor:Colors.green),
+          StatisticBox(title:"Balance",amount:1000.0,textColor:Colors.black,bRadius: _bRadius,),
+          StatisticBox(title:"Expense",amount:100.0,textColor:Colors.red,bRadius: _bRadius),
+          StatisticBox(title:"Income",amount:1000.0,textColor:Colors.green,bRadius: _bRadius),
         ],
       ),
     );
@@ -38,7 +39,7 @@ class StatisticBox extends StatelessWidget {
   final Color textColor;
 
   final double _sqmargin = 2.0;
-  final double _bRadius = 7.0;
+  double bRadius = 7.0;
   final double _fontSmall = 12.0;
   final double _fontLarge = 25.0;
   final double _containerHeight = 80.0;
@@ -49,6 +50,7 @@ class StatisticBox extends StatelessWidget {
     @required this.title,
     @required this.amount,
     @required this.textColor,
+    this.bRadius,
   });
 
 
@@ -63,7 +65,7 @@ class StatisticBox extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           shape: BoxShape.rectangle,
-          borderRadius: BorderRadius.circular(_bRadius),
+          borderRadius: BorderRadius.circular(bRadius),
           boxShadow: [
             new BoxShadow(
                 color: Colors.black45,

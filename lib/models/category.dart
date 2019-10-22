@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Category {
-  final IconData _categoryIcon;
-  final String _categoryName;
+  final IconData categoryIcon;
+  final String categoryName;
 
-  Category(this._categoryIcon, this._categoryName);
+  Category(this.categoryIcon, this.categoryName);
 }
 
 final List<Category> categories = [
