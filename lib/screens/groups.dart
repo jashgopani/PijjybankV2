@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'grouptimeline.dart';
+
 class Groups extends StatefulWidget {
   @override
   _GroupsState createState() => _GroupsState();
@@ -44,7 +46,6 @@ class _GroupsState extends State<Groups> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
         key: _scaffoldKey,
         appBar: AppBar(
           elevation: 0.0,
@@ -136,45 +137,18 @@ class _GroupsState extends State<Groups> {
           },
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return Dismissible(
-                background: Container(
-                  color: Colors.red,
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
-                key: Key(this.toString()),
-                onDismissed: (DismissDirection d) {
-                  print(d.toString());
-                },
-                child: Container(
-                  margin: EdgeInsets.only(left: 10.0, top: 5.0, right: 10.0),
-                  color: Colors.transparent,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0)),
-                    color: cardColors[_randomColor()],
-                    semanticContainer: true,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.receipt,
-                        size: 30.0,
-                        color: Colors.white,
-                      ),
-                      isThreeLine: true,
-                      title: Text("Group $index",
-                          style:
-                              TextStyle(fontSize: 20.0, color: Colors.white)),
-                      subtitle:
-                          Text("Admin", style: TextStyle(color: Colors.white)),
-                      trailing: Text("\u20B9${new Random().nextInt(1000)}",
-                          style:
-                              TextStyle(fontSize: 20.0, color: Colors.white)),
-                      onTap: () {
-                        _randomColor();
-                      },
-                    ),
+              return Container(
+                padding: EdgeInsets.symmetric(),
+                child: Card(
+                  child: ListTile(
+                    title: Text("Group Name"),
+                    subtitle: Text("Group Admin"),
+                    trailing: Text("200"),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return Timeline();
+                      }));
+                    },
                   ),
                 ),
               );

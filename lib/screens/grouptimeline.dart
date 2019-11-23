@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pijjybank/models/transaction.dart';
 import 'package:pijjybank/screens/groups.dart';
+import 'package:pijjybank/models/transaction.dart';
 import 'package:side_header_list_view/side_header_list_view.dart';
+
+import '../widgets/budgetOverview.dart';
 
 class Timeline extends StatefulWidget {
   @override
@@ -10,16 +12,10 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final GlobalKey<ScaffoldState> _drawerKey =
-      GlobalKey<ScaffoldState>(); //for drawer
-
-  PersistentBottomSheetController _bottomSheetController;
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+  GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey<ScaffoldState>();//for drawer
   String _username = "Jash";
-
-  var fabIcon = Icon(Icons.add);
-
-
   _getDay(int weekday) {
     if (weekday == 1)
       return "MON";
@@ -39,45 +35,25 @@ class _TimelineState extends State<Timeline> {
 
   Container _buildBottomSheet(context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height*0.7,
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
           color: Colors.red,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0))),
-      child: Column(
-        children: <Widget>[
-          Text("Bottom Sheet"),
-          RaisedButton(
-              child: Text("CLose"),
-              onPressed: () {
-                _closeBottomSheet();
-              })
-        ],
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0),topRight: Radius.circular(16.0))
       ),
+      child: Text("Bottom Sheet"),
     );
-  }
-
-  _closeBottomSheet() {
-    if (_bottomSheetController != null) {
-      setState(() {
-        fabIcon = Icon(Icons.add);
-      });
-      _bottomSheetController.close();
-      _bottomSheetController = null;
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Timeline",
-          ),
+          title: Text("Timeline",),
           elevation: 1.0,
           iconTheme: new IconThemeData(color: Colors.white),
           actions: <Widget>[
@@ -86,7 +62,6 @@ class _TimelineState extends State<Timeline> {
               onPressed: () {},
             ),
           ],
-          flexibleSpace: Container(),
         ),
         key: _scaffoldKey,
         body: RefreshIndicator(
@@ -109,23 +84,17 @@ class _TimelineState extends State<Timeline> {
                   child: Column(
                     children: <Widget>[
                       Text(_getDay(transactions[index].date.weekday)),
-                      Text(
-                        transactions[index].date.day.toString(),
-                        style: Theme.of(context).textTheme.headline,
-                      ),
+                      Text(transactions[index].date.day.toString(),style: Theme.of(context).textTheme.headline,),
                     ],
                   ));
             },
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin: EdgeInsets.only(bottom: 8.0, left: 8.0),
-                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                margin: EdgeInsets.only(bottom: 8.0,left: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(8.0),
-                      bottomRight: Radius.circular(8.0),
-                      bottomLeft: Radius.circular(8.0)),
+                  borderRadius: BorderRadius.only(topRight:Radius.circular(8.0),bottomRight: Radius.circular(8.0),bottomLeft: Radius.circular(8.0)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,27 +104,17 @@ class _TimelineState extends State<Timeline> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          transactions[index].title,
-                          style: Theme.of(context).textTheme.title,
-                        ),
-                        Text(
-                          transactions[index].party,
-                          style: Theme.of(context).textTheme.subtitle,
-                        )
+                        Text(transactions[index].title,style: Theme.of(context).textTheme.title,),
+                        Text(transactions[index].party,style: Theme.of(context).textTheme.subtitle,)
                       ],
                     ),
-                    Text(
-                      transactions[index].amount.toString(),
-                      style: Theme.of(context).textTheme.headline,
-                    )
+                    Text(transactions[index].amount.toString(),style: Theme.of(context).textTheme.headline,)
                   ],
                 ),
               );
             },
             hasSameHeader: (int a, int b) {
-              Duration val =
-                  transactions[a].date.difference(transactions[b].date);
+              Duration val = transactions[a].date.difference(transactions[b].date);
               if (val.inDays == 0) return true;
               return false;
             },
@@ -163,19 +122,9 @@ class _TimelineState extends State<Timeline> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-
-            if (_bottomSheetController == null) {
-              setState(() {
-                fabIcon = Icon(Icons.close);
-              });
-              _bottomSheetController = _scaffoldKey.currentState
-                  .showBottomSheet((context) => _buildBottomSheet(context));
-            } else {
-              _closeBottomSheet();
-            }
-
+            _scaffoldKey.currentState.showBottomSheet((context)=>_buildBottomSheet(context));
           },
-          child: fabIcon,
+          child: Icon(Icons.add),
           tooltip: "Add new transaction",
         ),
         drawer: Drawer(
@@ -192,8 +141,8 @@ class _TimelineState extends State<Timeline> {
                           fontSize: 15.0,
                         )),
                     accountName: Text(_username,
-                        style: TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.w600)),
+                        style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.w600)),
                   ),
                   decoration: BoxDecoration(
                     color: Colors.blue,
@@ -203,8 +152,7 @@ class _TimelineState extends State<Timeline> {
                   leading: Icon(Icons.people),
                   title: Text("Group"),
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
                       return Groups();
                     }));
                   },
@@ -218,15 +166,13 @@ class _TimelineState extends State<Timeline> {
                   title: Text("Statistics"),
                 ),
                 ListTile(
-                    leading: Icon(Icons.account_circle),
-                    title: Text("Profile")),
+                    leading: Icon(Icons.account_circle), title: Text("Profile")),
                 ListTile(
                   leading: Icon(Icons.exit_to_app),
                   title: Text("Logout"),
                 ),
               ],
             )),
-//        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
     );
   }
