@@ -18,6 +18,7 @@ class _TimelineState extends State<Timeline> {
   String _username = "Jash";
 
   var fabIcon = Icon(Icons.add);
+  var elev = 6.0;
 
 
   _getDay(int weekday) {
@@ -43,7 +44,14 @@ class _TimelineState extends State<Timeline> {
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-          color: Colors.red,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            offset: Offset(0, 3.0),
+            blurRadius: 5.0
+          )
+        ],
+          color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16.0), topRight: Radius.circular(16.0))),
       child: Column(
@@ -62,6 +70,7 @@ class _TimelineState extends State<Timeline> {
   _closeBottomSheet() {
     if (_bottomSheetController != null) {
       setState(() {
+        elev=6.0;
         fabIcon = Icon(Icons.add);
       });
       _bottomSheetController.close();
@@ -162,10 +171,11 @@ class _TimelineState extends State<Timeline> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          elevation: elev,
           onPressed: () {
-
             if (_bottomSheetController == null) {
               setState(() {
+                elev=0.0;
                 fabIcon = Icon(Icons.close);
               });
               _bottomSheetController = _scaffoldKey.currentState
