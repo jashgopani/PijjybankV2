@@ -50,7 +50,7 @@ class Login extends StatelessWidget {
                   ),
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Activity();
+                      return Timeline();
                     }));
                   },
                 ),

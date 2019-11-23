@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pijjybank/screens/groups.dart';
+import 'package:pijjybank/models/transaction.dart';
+import 'package:side_header_list_view/side_header_list_view.dart';
 
 import '../widgets/budgetOverview.dart';
 
@@ -10,154 +12,124 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
-  final GlobalKey<ScaffoldState> _scaffoldDrawerKey =
-      GlobalKey<ScaffoldState>(); //for drawer
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _drawerKey = GlobalKey<ScaffoldState>();//for drawer
   String _username = "Jash";
+  _getDay(int weekday) {
+    if (weekday == 1)
+      return "MON";
+    else if (weekday == 2)
+      return "TUE";
+    else if (weekday == 3)
+      return "WED";
+    else if (weekday == 4)
+      return "THU";
+    else if (weekday == 5)
+      return "FRI";
+    else if (weekday == 6)
+      return "SAT";
+    else
+      return "SUN";
+  }
 
-  @override
+  Container _buildBottomSheet(context) {
+    return Container(
+      height: MediaQuery.of(context).size.height*0.7,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(16.0),topRight: Radius.circular(16.0))
+      ),
+      child: Text("Bottom Sheet"),
+    );
+  }
+
+@override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
-        key: _scaffoldDrawerKey,
+        appBar: AppBar(
+          title: Text("Timeline",style: Theme.of(context).textTheme.title,),
+          elevation: 1.0,
+          backgroundColor: Colors.white,
+          iconTheme: new IconThemeData(color: Colors.black),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        key: _scaffoldKey,
         body: RefreshIndicator(
           onRefresh: () async {
             //as this always returns a future object, we have just added a future delay and
             // await keyword by default returns a future object so no need to return explicitly here
             await Future.delayed(Duration(seconds: 1));
-            _scaffoldDrawerKey.currentState.showSnackBar(SnackBar(
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
               content: Text("Refreshed"),
             ));
           },
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                pinned: true,
-//              floating: true,
-                title: Text(
-                  "Timeline",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                  ),
+          child: SideHeaderListView(
+            padding: new EdgeInsets.all(8.0),
+            itemCount: transactions.length,
+            itemExtend: 70.0,
+            headerBuilder: (BuildContext context, int index) {
+              return Container(
+                  padding: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(),
+                  child: Column(
+                    children: <Widget>[
+                      Text(_getDay(transactions[index].date.weekday)),
+                      Text(transactions[index].date.day.toString(),style: Theme.of(context).textTheme.headline,),
+                    ],
+                  ));
+            },
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: EdgeInsets.only(bottom: 8.0,left: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 8.0,horizontal: 8.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topRight:Radius.circular(8.0),bottomRight: Radius.circular(8.0),bottomLeft: Radius.circular(8.0)),
                 ),
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      debugPrint("Search Icon CLicked");
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.filter_list),
-                    onPressed: () {
-                      debugPrint("Filter Icon CLicked");
-                    },
-                  ),
-                ],
-                leading: IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    debugPrint("Drawer open");
-                    _scaffoldDrawerKey.currentState.openDrawer();
-                  },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(transactions[index].title,style: Theme.of(context).textTheme.title,),
+                        Text(transactions[index].party,style: Theme.of(context).textTheme.subtitle,)
+                      ],
+                    ),
+                    Text(transactions[index].amount.toString(),style: Theme.of(context).textTheme.headline,)
+                  ],
                 ),
-                expandedHeight: 200.0,
-                flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  background: Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(top: 80.0),
-                      child: BudgetOverview()),
-                ),
-              ),
-              SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                      (context, index) => Dismissible(
-                            background: Container(
-                              color: Colors.red,
-                              child: Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                            key: Key((this).toString() + index.toString()),
-                            onDismissed: (DismissDirection d) {
-                              print(d.toString());
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 0.5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.rectangle,
-                              ),
-                              child: Card(
-                                child: ListTile(
-                                  leading: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[100],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      margin: EdgeInsets.zero,
-                                      padding: EdgeInsets.all(7.0),
-                                      child: Icon(Icons.fastfood,
-                                          size: 35.0, color: Colors.red)),
-                                  title: Text(
-                                    'Expense #$index',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 17.0),
-                                  ),
-                                  subtitle: Text(
-                                    'Some random description aksbjask ksfhk kafkjkf kfg aksgf kags fkg',
-                                    overflow: TextOverflow.clip,
-                                  ),
-                                  trailing: Text(
-                                    "\u20B9303",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      color: Colors.red,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  isThreeLine: true,
-                                ),
-                              ),
-                            ),
-                          ),
-                      childCount: 50))
-            ],
+              );
+            },
+            hasSameHeader: (int a, int b) {
+              Duration val = transactions[a].date.difference(transactions[b].date);
+              if (val.inDays == 0) return true;
+              return false;
+            },
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            _scaffoldDrawerKey.currentState.showSnackBar(new SnackBar(
-              content: new Text("Added Transaction"),
-              action: SnackBarAction(
-                label: "Undo",
-                onPressed: () {
-                  debugPrint("Snackbar action clicked");
-                },
-              ),
-            ));
-
-//            _scaffoldDrawerKey.currentState.showBottomSheet((context) {
-//              return Container(
-//                height:100.0,
-//                  child: Column(
-//                children: <Widget>[
-//                  Text("Bottom Sheet"),
-//                ],
-//              ));
-//            },
-//                elevation: 6.0,
-//                shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.circular(20.0)));
+            _scaffoldKey.currentState.showBottomSheet((context)=>_buildBottomSheet(context));
           },
           child: Icon(Icons.add),
           tooltip: "Add new transaction",
         ),
         drawer: Drawer(
+          key: _drawerKey,
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

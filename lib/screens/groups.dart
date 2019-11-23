@@ -10,7 +10,7 @@ class Groups extends StatefulWidget {
 
 class _GroupsState extends State<Groups> {
   final List<String> _choices = ['Join Group', 'Create Group'];
-  final GlobalKey<ScaffoldState> _scaffoldDrawerKey =
+  final GlobalKey<ScaffoldState> _scaffoldKey =
       GlobalKey<ScaffoldState>(); //for drawer
   String _username = "Jash";
 
@@ -45,7 +45,7 @@ class _GroupsState extends State<Groups> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
-        key: _scaffoldDrawerKey,
+        key: _scaffoldKey,
         appBar: AppBar(
           elevation: 0.0,
           title: Text(
@@ -130,7 +130,7 @@ class _GroupsState extends State<Groups> {
             //as this always returns a future object, we have just added a future delay and
             // await keyword by default returns a future object so no need to return explicitly here
             await Future.delayed(Duration(seconds: 1));
-            _scaffoldDrawerKey.currentState.showSnackBar(SnackBar(
+            _scaffoldKey.currentState.showSnackBar(SnackBar(
               content: Text("Refreshed"),
             ));
           },
