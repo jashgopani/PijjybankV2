@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "839780277650",
+    "firebase_url": "https://pijjybank-flutter.firebaseio.com",
+    "project_id": "pijjybank-flutter",
+    "storage_bucket": "pijjybank-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:839780277650:android:dcd3935038712796a2b54b",
+        "android_client_info": {
+          "package_name": "gopani.jash.pijjybank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "839780277650-bfrpvgkdg3euj2cqd6tvmntvtl8f6du9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "gopani.jash.pijjybank",
+            "certificate_hash": "98a6d1d7efe06eb87038b263953f8527e890ac25"
+          }
+        },
+        {
+          "client_id": "839780277650-jmq5pga2lgfo3rev6qrcs9ohlr2dbdnd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNC4kTnoIhqkDUnivpBaZlGOkZCd_gWLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "839780277650-jmq5pga2lgfo3rev6qrcs9ohlr2dbdnd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

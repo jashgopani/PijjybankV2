@@ -1,7 +1,27 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:pijjybank/screens/test.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 import 'timeline.dart';
-class Login extends StatelessWidget {
+
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  FirebaseUser _user;
+
+  bool busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.currentUser().then(
+          (user) => setState(() => this._user = user),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,16 +68,48 @@ class Login extends StatelessWidget {
                           ))
                     ],
                   ),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return Timeline();
-                    }));
-                  },
+                  onPressed: this.busy
+                    ?null
+                      :()async{
+                    setState(() {
+                      this.busy=true;
+                    });
+                    final user = await this._googleSignIn();
+                    this.gotoTimeline(user);
+                    setState(() {
+                      this.busy=false;
+                    });
+                  }
                 ),
               ],
             ),
           ),
         ));
+  }
+
+  Future<FirebaseUser> _googleSignIn()async {
+    final curUser = this._user??await FirebaseAuth.instance.currentUser();
+    if(curUser!=null && !curUser.isAnonymous){
+      return curUser;
+    }
+    final googleUser = await GoogleSignIn().signIn();
+    final googleAuth = await googleUser.authentication;
+    final AuthCredential credential = GoogleAuthProvider.getCredential(idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+    final user = (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+    var info = new UserUpdateInfo();
+    info.displayName = "Jash";
+    setState(() {
+      user.updateProfile(info);
+      this._user = user;
+    });
+    return user;
+  }
+
+  void gotoTimeline(user) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) {
+          return Timeline();
+        }));
   }
 }
 

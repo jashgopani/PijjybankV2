@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pijjybank/models/transaction.dart';
@@ -5,11 +6,18 @@ import 'package:pijjybank/screens/groups.dart';
 import 'package:side_header_list_view/side_header_list_view.dart';
 
 class Timeline extends StatefulWidget {
+  final FirebaseUser user;
+
+  Timeline({
+    @required this.user
+  });
+
   @override
   _TimelineState createState() => _TimelineState();
 }
 
 class _TimelineState extends State<Timeline> {
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> _drawerKey =
       GlobalKey<ScaffoldState>(); //for drawer
@@ -80,12 +88,13 @@ class _TimelineState extends State<Timeline> {
 
   @override
   Widget build(BuildContext context) {
+    String name = this.widget.user.displayName;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Timeline",
+          _username,
           ),
           elevation: 1.0,
           iconTheme: new IconThemeData(color: Colors.white),
