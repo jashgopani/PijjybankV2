@@ -22,7 +22,6 @@ getColor(int index, int opacity) {
 Widget transactionList() {
   return ListView.separated(
       separatorBuilder: (context, index) {
-        print("seperator $index");
         if (index < transactions.length - 1) {
           if (transactions[index]
                   .date

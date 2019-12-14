@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pijjybank/models/group.dart';
 import 'package:pijjybank/widgets/transactionList.dart';
 
 class Timeline extends StatefulWidget {
@@ -14,12 +15,17 @@ class Timeline extends StatefulWidget {
 }
 
 class _TimelineState extends State<Timeline> {
+  var appbars = [
+    timelineAppBar,
+    groupsAppBar,
+    groupsAppBar,
+    groupsAppBar,
+    groupsAppBar
+
+  ];
   var screens = [
     transactionList(),
-    Container(
-        padding: EdgeInsets.all(100.0),
-        color: Colors.green,
-        child: Text("groups")),
+    listGroups(),
     Container(
         padding: EdgeInsets.all(100.0),
         color: Colors.green,
@@ -45,34 +51,7 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: IconButton(
-          icon: Icon(
-            Icons.filter_list,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-          tooltip: "Filter List",
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-            tooltip: "Search Transaction",
-          ),
-        ],
-        centerTitle: true,
-        title: SingleStat(
-          title: "Balance",
-          amount: 5000,
-          titleColor: Colors.white,
-          amountColor: Colors.white,
-        ),
-      ),
+      appBar: appbars[currentScreen],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         unselectedIconTheme: unselectedIconTheme,
@@ -84,10 +63,11 @@ class _TimelineState extends State<Timeline> {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.timeline,
-              ),
-              title: Text("Timeline"),),
+            icon: Icon(
+              Icons.timeline,
+            ),
+            title: Text("Timeline"),
+          ),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.group,
@@ -176,10 +156,39 @@ class SingleStat extends StatelessWidget {
           style: titleStyle,
         ),
         Text(
-        "\u20B9"+amount.toString(),
+          "\u20B9" + amount.toString(),
           style: amountStyle,
         )
       ],
     );
   }
 }
+
+var timelineAppBar = AppBar(
+  backgroundColor: Colors.black,
+  leading: IconButton(
+    icon: Icon(
+      Icons.filter_list,
+      color: Colors.white,
+    ),
+    onPressed: () {},
+    tooltip: "Filter List",
+  ),
+  actions: <Widget>[
+    IconButton(
+      icon: Icon(
+        Icons.search,
+        color: Colors.white,
+      ),
+      onPressed: () {},
+      tooltip: "Search Transaction",
+    ),
+  ],
+  centerTitle: true,
+  title: SingleStat(
+    title: "Balance",
+    amount: 5000,
+    titleColor: Colors.white,
+    amountColor: Colors.white,
+  ),
+);

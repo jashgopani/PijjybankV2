@@ -20,6 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.15.7
+  crypto: ^2.1.4
   firebase_core: ^0.4.2
   firebase_auth: ^0.15.1
   google_sign_in: ^3.2.4
