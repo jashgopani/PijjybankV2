@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pijjybank/screens/timeline.dart';
 import 'screens/login.dart';
 import 'package:flutter/services.dart';
 
@@ -14,14 +15,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-//        statusBarColor: Colors.blue,
-    ));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Pijjybank",
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        primaryColor: Colors.black,
+        accentColor: Colors.blueAccent,
+        canvasColor: Colors.white,
       ),
       home: Login(),
     );

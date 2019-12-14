@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:pijjybank/models/category.dart';
 
 class Transaction {
-  bool type; //expense if true, else income
+  bool isExpense; //expense if true, else income
   String title;
   double amount;
   String author, party;
@@ -11,7 +11,7 @@ class Transaction {
   DateTime date;
 
   Transaction(
-      {@required this.type,
+      {@required this.isExpense,
       @required this.title,
       @required this.amount,
       @required this.author,
@@ -23,7 +23,7 @@ class Transaction {
 
 List<Transaction> transactions = [
   Transaction(
-      type: true,
+      isExpense: false,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -31,7 +31,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: false,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -39,7 +39,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),  //DateTime.now().subtract(Duration(days: 1)))
   Transaction(
-      type: true,
+      isExpense: true,
       title: "birthday",
       amount: 100,
       author: "Jash",
@@ -47,7 +47,7 @@ List<Transaction> transactions = [
       category: categories[1],
       date: DateTime.now().subtract(Duration(days: 1))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -55,7 +55,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -63,7 +63,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 2))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -71,7 +71,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 2))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -79,7 +79,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 2))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -87,7 +87,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -95,7 +95,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -103,7 +103,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -111,7 +111,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -119,7 +119,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -127,7 +127,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -135,7 +135,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -143,7 +143,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -151,7 +151,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -159,7 +159,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -167,7 +167,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 5))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -175,7 +175,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -183,7 +183,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),  //DateTime.now().subtract(Duration(days: 1)))
   Transaction(
-      type: true,
+      isExpense: true,
       title: "birthday",
       amount: 100,
       author: "Jash",
@@ -191,7 +191,7 @@ List<Transaction> transactions = [
       category: categories[1],
       date: DateTime.now().subtract(Duration(days: 1))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -199,7 +199,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -207,7 +207,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 2))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -215,7 +215,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 2))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -223,7 +223,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 2))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -231,7 +231,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -239,7 +239,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -247,7 +247,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -255,7 +255,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -263,7 +263,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -271,7 +271,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -279,7 +279,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -287,7 +287,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -295,7 +295,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now().subtract(Duration(days: 3))),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
@@ -303,7 +303,7 @@ List<Transaction> transactions = [
       category: categories[0],
       date: DateTime.now()),
   Transaction(
-      type: true,
+      isExpense: true,
       title: "Party",
       amount: 300,
       author: "Jash",
