@@ -49,6 +49,8 @@ Widget transactionList() {
 
 transactionTile(int index) {
   return ListTile(
+    onTap: (){},
+    onLongPress: (){},
     leading: _itemIcon(index),
     title: Text(
       transactions[index].title,
